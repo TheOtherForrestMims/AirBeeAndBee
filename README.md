@@ -3,7 +3,9 @@ AIRBEEANDBEE
 
 An exploration of data collection from Bee Hives adapted from Arduino Examples 
 
-with a dash of Limor Fried 
+Nathan Vogel providing the nectar 
+
+with a dash of Limor Fried Pollen 
 
 PHILADELPHIA RESPRESENT
 
