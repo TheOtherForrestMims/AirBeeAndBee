@@ -3,7 +3,8 @@ AIRBEEANDBEE
 
 An exploration of data collection from Bee Hives adapted from Arduino Examples 
 
-Nathan Vogel providing the nectar 
+Nathan Vogel providing the nectar
+https://github.com/NateV/BundledWeatherSensor 
 
 with a dash of Limor Fried Pollen 
 
