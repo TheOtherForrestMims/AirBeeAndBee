@@ -72,7 +72,8 @@ IPAddress ip(192, 168, 0, 120);
 // (port 80 is default for HTTP):
 //EthernetServer server(80);
 // mitchilllz i change the port to 81!!!!!
-EthernetServer server(81); 
+EthernetServer server(81);
+
 void setup() {
   // Open serial communications and wait for port to open:
   Serial.begin(9600);
@@ -116,10 +117,54 @@ void loop() {
   int val3 = analogRead(PINPINPIN);
 
   // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
+  if (isnan(h) || isnan(t) || isnan(f)) { // isnan NOT A NUMBER
     Serial.println("Failed to read from DHT sensor!");
-    return;
+
+    /////////////////////////////////////////////
+    // ETHERNET HTML DATA
+    if (client) {
+      Serial.println("new client");
+      // an http request ends with a blank line
+      boolean currentLineIsBlank = true;
+      while (client.connected()) {
+        if (client.available()) {
+          char c = client.read();
+          Serial.write(c);
+          // if you've gotten to the end of the line (received a newline
+          // character) and the line is blank, the http request has ended,
+          // so you can send a reply
+          if (c == '\n' && currentLineIsBlank) {
+            // send a standard http response header
+            client.println("HTTP/1.1 200 OK");
+            client.println("Content-Type: application/json");
+            // the connection will be closed after completion of the response
+            client.println("Connection: close");
+            client.println();
+            client.print("{");
+            client.print(",\n  \"sensor offline\": "); //client.print(val3);
+            client.print("\n}\n");
+            break;
+          }
+          if (c == '\n') {
+            // you're starting a new line
+            currentLineIsBlank = true;
+          }
+          else if (c != '\r') {
+            // you've gotten a character on the current line
+            currentLineIsBlank = false;
+          }
+        }
+      }
+      // give the web browser time to receive the data
+      delay(1);
+      // close the connection:
+      //client.stop();
+      //Serial.println("client disconnected");
+    }
+    return; // this return statement stops the loop and starts again from the begining
+    // return is a good way to debug code. can return a value as well - if else
   }
+
 
   // Compute heat index
   // Must send in temp in Fahrenheit!
@@ -149,8 +194,8 @@ void loop() {
   //  Serial.print(hi);
   //  Serial.println(" *F");
 
-/////////////////////////////////////////////
-// ETHERNET HTML DATA 
+  /////////////////////////////////////////////
+  // ETHERNET HTML DATA
   if (client) {
     Serial.println("new client");
     // an http request ends with a blank line
@@ -167,7 +212,7 @@ void loop() {
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: application/json");
           // the connection will be closed after completion of the response
-          client.println("Connection: close");  
+          client.println("Connection: close");
           client.println();
           client.print("{");
           client.print("\n  \"tempc\": "); client.print(t);
