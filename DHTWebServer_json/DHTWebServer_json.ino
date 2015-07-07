@@ -171,11 +171,11 @@ void loop() {
           client.println();
           client.print("{");
           client.print("\n  \"tempc\": "); client.print(t);
-          client.print(",\n  \"tempf\": "); client.println(f);
-          client.print(",\n  \"rh\": "); client.println(h);
-          client.print(",\n  \"co\": "); client.println(val);
-          client.print(",\n  \"etoh\": "); client.println(val2);
-          client.print(",\n  \"methane\": "); client.println(val3);
+          client.print(",\n  \"tempf\": "); client.print(f);
+          client.print(",\n  \"rh\": "); client.print(h);
+          client.print(",\n  \"co\": "); client.print(val);
+          client.print(",\n  \"etoh\": "); client.print(val2);
+          client.print(",\n  \"methane\": "); client.print(val3);
           client.print("\n}\n");
           break;
         }

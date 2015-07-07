@@ -77,7 +77,7 @@ function refresh() {
     if(error) {
       window.setTimeout(refresh, 1000)
     } else {
-      data.push(newdata.temperature);
+      data.push(newdata.tempc);
 
       path.attr("d", line)
           .attr("transform", null) ;
